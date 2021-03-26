@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VUE BROWSER | CDN</title>
+  </head>
+  <body>
+    <div id="app">
+      <h3>Vue Data</h3>
+      <button @click="message = 'v:on:click is the same as @click'">
+        Change text
+      </button>
+      <span>{{ message }}</span>
+      <br />
+
+      <button @click="count++">Increment</button>
+      <span>{{ count }}</span>
+      <h3>Vue Computed</h3>
+      <span>{{ messageCount }}</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "Hello VUE",
+          count: 0,
+        },
+        computed: {
+          messageCount() {
+            return `${this.message} - ${this.count}`;
+          },
+        },
+      });
+    </script>
+    <style>
+      button {
+        min-width: 150px;
+      }
+    </style>
+  </body>
+</html>
