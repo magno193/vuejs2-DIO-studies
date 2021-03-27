@@ -16,6 +16,46 @@
       blue: !show
     }">with dynamic class and conditional</span>
     <hr width="100%">
+    <Title :title="'v-for'" :isSub="true" />
+    <b><pre>Array iteration</pre></b>
+    <ul>
+      <li v-for="(item, index) in todos" :key="index" >
+        <samp><em>[{{index}}] {{ item }}</em></samp>
+      </li>
+    </ul>
+    <b><pre>Object iteration</pre></b>
+    <ul>
+      <li v-for="(value, key, index) in todosObj" :key="key" >
+        <samp><em>[{{index}}] {{ key }}:{{ value }}</em></samp>
+      </li>
+    </ul>
+    <b><pre>Number iteration</pre></b>
+    <ul>
+      <li v-for="(number, index) in 5" :key="number" >
+        <samp><em>[{{index}}] {{number * 2}}</em></samp>
+      </li>
+    </ul>
+    <b><pre>Object[] iteration</pre></b>
+    <ul>
+      <li v-for="(todo, index) in todoCompleted" :key="todo.id">
+        <samp><em>[{{index}}] {{todo}}</em></samp>
+      </li>
+    </ul>
+    <b><pre>Object[] iteration with filtered computed</pre></b>
+    <ul>
+      <li v-for="(todo, index) in filteredTodos" :key="todo.id">
+        <samp><em>[{{index}}] {{todo}}</em></samp>
+      </li>
+    </ul>
+    <b><pre>Component iteration (numbered props)</pre></b>
+    <ul>
+      <ListItem v-for="(number) in 3" :key="number" :number="number"/>
+    </ul>
+    <b><pre>Component iteration (v-bind)</pre></b>
+    <ul>
+      <ListItem v-for="(todo) in todoCompleted" :key="todo.id" v-bind="todo"/>
+    </ul>
+    <hr width="100%">
     <Title :title="'Props'" />
     <p>example syntax: <code>props: { title: { type: String, required: false, default: 'Default Title' }}</code></p>
   </div>
@@ -23,15 +63,33 @@
 
 <script>
 import Title from './components/Title.vue';
+import ListItem from './components/ListItem.vue';
 export default {
   name: 'App',
   data(){
     return{
       show: true,
-      url: 'https://www.google.com',
+      url: 'https://br.vuejs.org/',
       dynamicClass: 'red',
       red: 'red',
-      blue: 'orange'
+      blue: 'orange',
+      todos: ['Item 1', 'Item 2', 'Item 3'],
+      todosObj: {
+        key1: 'Item 1',
+        key2: 'Item 2',
+        key3: 'Item 3',
+      },
+      todoCompleted: [
+        {id: 1, label: 'Item 1', isCompleted: false},
+        {id: 2, label: 'Item 2', isCompleted: true},
+        {id: 3, label: 'Item 3', isCompleted: true},
+        {id: 4, label: 'Item 4', isCompleted: false},
+      ],
+    }
+  },
+  computed: {
+    filteredTodos() {
+      return this.todoCompleted.filter(todo => todo.isCompleted)
     }
   },
   methods: {
@@ -39,7 +97,7 @@ export default {
       this.show = !this.show;
     }
   },
-  components:{Title}
+  components:{Title, ListItem}
 };
 </script>
 
@@ -50,6 +108,9 @@ export default {
 }
 hr {
   margin: 5px 0;
+}
+ul {
+  list-style-type: none;
 }
 .red,.blue,.orange {
   font-size: 0.85rem;
